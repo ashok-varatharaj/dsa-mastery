@@ -1,47 +1,45 @@
-const assignCookies = (greedChildrenList=[], cookiesList=[]) => {
-    if(greedChildrenList.length == 0 || cookiesList.length == 0){
-        return 0;
-    }
+const assignCookies = (greed=[], cookies=[]) => {
 /*
     PROBLEM STATEMENT
-        Need to Assign the cookies to the Maximum children
+        Have N of greed, and have M no of Cookies, Each greed has the greed factor of cookies, Need to give cookies to the maximum greed
 
-    1. BRUTE FORCE - O(N-SQUARE)
-
-        FOR LOOP OF COOKIES
-            FOR LOOP OF CHILDREN REQUIRED COOKIES
-                IF COOKIE SIZE AND CHILDREN REQUIREMENT MET, THEN ASSIGN COOKIE TO CHILDREN
+    1. BRUTE FORCE - O(N-LOG-N)
 
     2. OPTIMISED - PSUEDOCODE
         
         SOLUTION - GREEDY
 
-        1. SORT CHILDREN_GREED LIST
-        2. SORT COOKIES LIST
-        3. USE TWO POINTERS 
-            LEFT IN COOKIES, AND RIGHT IN CHILDREN
-            IF(COOKIE >= CHILDREN){
-                RIGHT++;
-            }ELSE{
-                SKIP RIGHT
-            }
-            LEFT++;
+        STEPS
+
+        PROBELM - HOW TO MAXIMIZE THE N NO OF greed?
+
+        LOGIC
+        -----
+        1. SORT greed ARRAY
+        2. SORT COOKIES ARRAY
+        IF THE greed COOKIE EXPECTED COUNT IS GREATER OR EQUAL TO THE COOKIE COUNT, THEN ASSIGN THE COOKIE TO THE USER
+        3. TO MAINTAIN THE COUNT, WILL USE TWO POINTERS
+
+        IF (COOKIE >= GREED_CHILDREN){
+            RIGHT++
+        }
 */
+
+    cookies = cookies.sort((a, b) => a - b);
+    greed = greed.sort((a, b) => a - b);
+
     let left = 0;
     let right = 0;
-    cookiesList.sort((a, b) => a - b);
-    greedChildrenList.sort((a, b) => a - b);
-    while(left < cookiesList.length){
-        if(right >= greedChildrenList.length) break;
-        if(cookiesList[left] >= greedChildrenList[right]){
+    while(left < cookies.length){
+        if(cookies[left] >= greed[right]){
             right++;
-        }else{
-            console.log("Skip");
         }
-        left++;
+        left++
     }
-    console.log("Satisfied Children", right, cookiesList)
+    console.log("Satisfied Children", right);
 }
+
+assignCookies([1,2,3], [1,2,4])
 
 assignCookies([1,2,3], [1,1])
 
