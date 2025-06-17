@@ -10,40 +10,43 @@ const lemonadeChange = (arr) => {
         
         SOLUTION - GREEDY
 
-        let five = 0; let ten = 0; let twenty = 0;
-        
+        let five = 0; let ten = 0; let twenty = 0;      
 
 */
-    let five = 0; let ten = 0; let twenty = 0;
 
-    for(let i = 0; i < arr.length; i++){
-        if(arr[i] == 5){
+    let five = 0, ten = 0, twenty = 0;
+
+    for(let item of arr){
+        if(item == 5){
+            // COLLECT 5 IN BOX
             five += 1;
-        }else if(arr[i] == 10){
-            if(five >= 1){
-                five -= 1;
-                ten += 1;
-            }else{
-                console.log("Not able to Serve change to customers on 10 change")
-                return false; // NO CHANGE
+        }else if(item == 10){
+            // COLLECT 10 IN BOX
+            // SHOULD RETURN THE 5 CHANGE TO CUSTOMER, WE SHOULD HAVE CHANGE, ELSE RETURN FALSE
+            if(five == 0){
+                return false;
             }
-        }else{
-            if(ten >= 1 && five >= 1){
-                ten -= 1;
-                five -= 1;
+            ten += 1;
+            five -= 1;
+        }else if(item == 20){
+            // COLLECT 20 FROM THE CUSTOMER AND ADD IT IN BOX
+            // SHOULD RETURN THE 15 CHANGE TO THE CUSTOMER, 
+            // WE SHOULD HAVE 15 CHANGE, ELSE RETURN FALSE
+            // 15 = (5+5+5) or 15 = (10+5)
+            if(five == 3){
                 twenty += 1;
-            }else if(five >= 3){
                 five -= 3;
+            }else if(five >= 1 && ten >= 1){
                 twenty += 1;
+                five -= 1;
+                ten -= 1;
             }else{
-                console.log("ten",ten, "five", five);
-                console.log("Not able to Serve change to customers on 20 change")
-                return false; // NO CHANGE
+                return false;
             }
         }
     }
-    console.log("Able to Serve change to customers")
-    return true;
+    console.log("We can give the change to all the customers", arr)
 }
 
 lemonadeChange([5, 5, 5, 10, 10, 20]);
+lemonadeChange([5, 5, 10, 10, 10, 20]);
