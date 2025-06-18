@@ -17,19 +17,16 @@ const shortestJobFirst = (jobArr=[]) => {
 */
 
     jobArr.sort((a, b) => a - b);
-    console.log("Job Arr --->", jobArr)
 
-    let arrLength = jobArr.length;
     let waitingTime = 0;
-    let totalWaitingTime = 0;
-    for(let i = 0; i < arrLength; i++){
-        waitingTime += totalWaitingTime;
-        totalWaitingTime += jobArr[i];
+    let lastJob = 0;
+    console.log("jobArr",jobArr)
+    for(let job of jobArr){
+        waitingTime += lastJob;
+        lastJob += job;
     }
-    console.log("waitingTime----->",waitingTime)
-    console.log("totalWaitingTime---->",totalWaitingTime)
-    let avgTime = Math.round(waitingTime / arrLength);
-    console.log("Avg time", avgTime);
+    console.log("waitingTime", waitingTime)
+    return waitingTime / jobArr.length;
 }
 
-shortestJobFirst([4, 3, 7, 1, 2, 5])
+shortestJobFirst([4, 3, 7, 1, 2])
